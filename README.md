@@ -1,6 +1,6 @@
 # skebbyAPI Version 0.1 beta
 
-The goal of this project is to give the developers a tool that can be integrated inside the application in no time, it can be extremely easy to use and can be readable.
+The goal of this project is to give developers a tool that can be integrated inside the application in no time, can be easy to use and can be readable.
 
 ## Functions available
 The functions available by the API are:
