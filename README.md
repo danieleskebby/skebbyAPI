@@ -5,7 +5,7 @@ The goal of this project is to give the developers a tool that can be integrated
 ## Functions available
 The functions available by the API are:
 
-- `sendSMS`: sends a SMS message to a given array of recipients. Return a string.
+- `sendSMS`: sends a SMS message to a given array of recipients. Return a querystring with the result of the request.
 - `getCredit`: get the the available currency on your Skebby account, and gives you the SMSs available, divided by type.
 - `addAlias`: sends an alphanumeric sender (aka Alias) on approvation by AGCOM.
 
@@ -19,15 +19,18 @@ The API is based on calling the Skebby Gateway Server via HTTP POST Request. Dev
 
 Here's a brief example in PHP:
 
-```
+```php
 <?php
-// include the API file
+// include API file
 require_once 'skebbyAPI.php';
-// declare the skebbyAPI class
+
+// declare skebbyAPI class
 $sms = new skebbyAPI('username','password');
+
 // use sendSMS function to send a SMS
 $send = $sms->sendSMS( array('391234567890'), 'test classe skebbyAPI via PHP' );
-// display the results
+
+// display results
 print_r( $send );
 ?>
 ```
