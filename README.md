@@ -31,8 +31,8 @@ $sms = new skebbyAPI('username','password');
 ```
 
 #### Variables accepted
-- _string_ username *required*: The username used when you log on Skebby
-- _string_ password *required*: The password used when you log on Skebby
+- _string_ username **required**: The username used when you log on Skebby
+- _string_ password **required**: The password used when you log on Skebby
 
 ### Send a SMS message
 ```php
@@ -55,17 +55,17 @@ The function will return an url-encoded string containing the result of the disp
 #### Variables accepted
 You can add these variables to configure the dispatch:
 
-- _string_ `text` *required*: a text string that will be sent via SMS
-- _array_ `recipients` *required*: the cellphone numbers that will receive the message
+- _string_ `text` **required**: a text string that will be sent via SMS
+- _array_ `recipients` **required**: the cellphone numbers that will receive the message
 - _string_ `method`: the SMS type that will be sent. You can choose between three types of message:
-  - `send_sms_basic`: *Basic SMS* best effort quality, delivery non guaranteed and with possible delay, fixed sender id, delivery report not available.
-  - `send_sms_classic`: *Classic SMS* high quality, guaranteed and immediate delivery time, personalize sender id. 
-  - `send_sms_classic_report`: *Classic+ SMS* as Classic with delivery report for single message (DLR).
-  Default value: _send_sms_classic_
+  - `send_sms_basic`: **Basic SMS** best effort quality, delivery non guaranteed and with possible delay, fixed sender id, delivery report not available.
+  - `send_sms_classic`: **Classic SMS** high quality, guaranteed and immediate delivery time, personalize sender id. 
+  - `send_sms_classic_report`: **Classic+ SMS** as Classic with delivery report for single message (DLR).
+Default value: _send_sms_classic_
 - _string_ `charset`: select the charset of the text. Charsets available are:
   - `UTF-8`
   - `ISO-8859-1`
-  Default value: _ISO-8859-1_
+Default value: _ISO-8859-1_
 - _string_ `delivery_start`: To schedule SMS dispatch. Format used is [RFC 2822](http://www.php.net/manual/en/class.datetime.php#datetime.constants.rfc2822)
 - _string_ `sender_number`:(only for Classic & Classic+ SMS) a numeric string that will appear as the sender of the message
 - _string_ `sender_string`: (only for Classic & Classic+ SMS) an alphanumeric string that will appear as the sender of the message
@@ -73,10 +73,10 @@ You can add these variables to configure the dispatch:
   - `normal`
   - `UCS2`
   Text of the message, maximum lenght 670 characters or 10 SMS concatenated in one message.
-  Default value: _normal_
+Default value: _normal_
 - _string_ `validity_period`: (only for Classic & Classic+ SMS) You can specify for how many minutes (or hours) the operator must retry to send the SMS in case of phone turned off or unreachable. 
   Expressed in minutes, integer number (minimum value 5 minutes).
-  Default value: 2 days ( 2880 minutes = 60 * 48 ) )
+Default value: 2 days ( 2880 minutes = 60 ** 48 ) )
 - _string_ `user_reference`: (only for Classic+ SMS) Reference string customizable that will be returned with the delivery report.
 Supported characters: `[a-zA-Z0-9-_+:;]`
 
@@ -108,7 +108,7 @@ You can add these variables to configure the dispatch:
 - _string_ `charset`: select the charset of the text. Charsets available are:
   - `UTF-8`
   - `ISO-8859-1`
-  Default value: _ISO-8859-1_
+Default value: _ISO-8859-1_
 
 #### Return values
 The function will return a string url-encoded that contains the result's variables of the dispatch.
@@ -151,19 +151,19 @@ The function will return an url-encoded string containing the result of the requ
 
 #### Variables accepted
 You can add these variables to configure the dispatch:
-- _string_ `alias` *required*: an alphanumeric string that will be sent to registration. *WARNING: the string must be no longer than 11 characters*
-- _string_ `business_name` *required*: The name of your company
-- _string_ `nation` *required*: Country (2 characters, uppercase, ISO 3166-1 alpha-2)
-- _string_ `vat_number` *required*: VAT identification number
-- _string_ `taxpayer_number` *required*: Taxpayer Identification number (same as vat if not available) 
-- _string_ `street` *required*: The address where the company is located
-- _string_ `city` *required*: The city where your company is located
-- _string_ `postcode` *required*: Postal code / ZIP code 
-- _string_ `contact` *required*: Contact information (email, phone number)
+- _string_ `alias` **required**: an alphanumeric string that will be sent to registration. **WARNING: the string must be no longer than 11 characters**
+- _string_ `business_name` **required**: The name of your company
+- _string_ `nation` **required**: Country (2 characters, uppercase, ISO 3166-1 alpha-2)
+- _string_ `vat_number` **required**: VAT identification number
+- _string_ `taxpayer_number` **required**: Taxpayer Identification number (same as vat if not available) 
+- _string_ `street` **required**: The address where the company is located
+- _string_ `city` **required**: The city where your company is located
+- _string_ `postcode` **required**: Postal code / ZIP code 
+- _string_ `contact` **required**: Contact information (email, phone number)
 - _string_ `charset`: select the charset of the text. Charsets available are:
   - `UTF-8`
   - `ISO-8859-1`
-  Default value: _ISO-8859-1_
+Default value: _ISO-8859-1_
 
 #### Return values
 The function will return a string url-encoded that contains the result's variables of the dispatch.
