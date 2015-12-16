@@ -81,7 +81,7 @@ Default value: _**normal**_
 Expressed in minutes, integer number (minimum value 5 minutes).
 Default value: _**2 days ( 2880 minutes = 60 ** 48 ) )**_
 - _string_ `user_reference`: (only for Classic+ SMS) Reference string customizable that will be returned with the delivery report.
-Supported characters: _**`[a-zA-Z0-9-_+:;]`**_
+Supported characters: `[a-zA-Z0-9-_+:;]`
 
 #### Return values
 The function will return a string url-encoded that contains the result's variables of the dispatch.
