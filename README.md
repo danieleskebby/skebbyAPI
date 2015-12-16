@@ -61,24 +61,27 @@ You can add these variables to configure the dispatch:
   - `send_sms_basic`: **Basic SMS** best effort quality, delivery non guaranteed and with possible delay, fixed sender id, delivery report not available.
   - `send_sms_classic`: **Classic SMS** high quality, guaranteed and immediate delivery time, personalize sender id. 
   - `send_sms_classic_report`: **Classic+ SMS** as Classic with delivery report for single message (DLR).
-Default value: _send_sms_classic_
+  
+Default value: _**send_sms_classic**_
 - _string_ `charset`: select the charset of the text. Charsets available are:
   - `UTF-8`
   - `ISO-8859-1`
-Default value: _ISO-8859-1_
+  
+Default value: _**ISO-8859-1**_
 - _string_ `delivery_start`: To schedule SMS dispatch. Format used is [RFC 2822](http://www.php.net/manual/en/class.datetime.php#datetime.constants.rfc2822)
 - _string_ `sender_number`:(only for Classic & Classic+ SMS) a numeric string that will appear as the sender of the message
 - _string_ `sender_string`: (only for Classic & Classic+ SMS) an alphanumeric string that will appear as the sender of the message
 - _string_ `encoding_scheme`: (only for Classic & Classic+ SMS) To use accented or special characters commonly used in the following languages: Arabic, French, Chinese, Korean, Japanese, Slavic and Spanish. Values accepted:
   - `normal`
   - `UCS2`
-  Text of the message, maximum lenght 670 characters or 10 SMS concatenated in one message.
-Default value: _normal_
+  
+Text of the message, maximum lenght 670 characters or 10 SMS concatenated in one message.
+Default value: _**normal**_
 - _string_ `validity_period`: (only for Classic & Classic+ SMS) You can specify for how many minutes (or hours) the operator must retry to send the SMS in case of phone turned off or unreachable. 
-  Expressed in minutes, integer number (minimum value 5 minutes).
-Default value: 2 days ( 2880 minutes = 60 ** 48 ) )
+Expressed in minutes, integer number (minimum value 5 minutes).
+Default value: _**2 days ( 2880 minutes = 60 ** 48 ) )**_
 - _string_ `user_reference`: (only for Classic+ SMS) Reference string customizable that will be returned with the delivery report.
-Supported characters: `[a-zA-Z0-9-_+:;]`
+Supported characters: _**`[a-zA-Z0-9-_+:;]`**_
 
 #### Return values
 The function will return a string url-encoded that contains the result's variables of the dispatch.
@@ -108,7 +111,8 @@ You can add these variables to configure the dispatch:
 - _string_ `charset`: select the charset of the text. Charsets available are:
   - `UTF-8`
   - `ISO-8859-1`
-Default value: _ISO-8859-1_
+  
+Default value: _**ISO-8859-1**_
 
 #### Return values
 The function will return a string url-encoded that contains the result's variables of the dispatch.
@@ -178,8 +182,8 @@ In case of unsuccessful dispatch:
 - `message`: _string_ a message that explain the error
 
 ## TO-DO list
-- Make the logic of inserting the variables into the functions more uniform trough the languages
-- Include SOAP & REST sending method
+- [ ] Make the logic of inserting the variables into the functions more uniform trough the languages
+- [ ] Include SOAP & REST sending method
 
 ## Skebby documentation
 For further documentation, go on [Skebby website](http://www.skebby.it/business/index/send-docs)
