@@ -6,24 +6,27 @@ class skebbyAPI {
 	protected $pass;
 	protected $http_url = "https://gateway.skebby.it/api/send/smseasy/advanced/http.php";
 	
-	const NET_ERROR = "Network error: cURL can't connect to Skebby URL";
-	const SENDER_ERROR = "You+can+specify+only+one+type+of+sender,+numeric+or+alphanumeric";
+	const CURL_ERROR 	= 'cURL module is not installed. This module is necessary for the correct handling of HTTP requests by SkebbyAPI';
+	const NET_ERROR 	= 'Network error: cURL can\'t connect to Skebby URL';
+	const EMPTY_ERROR 	= 'One+or+more+of+the+required+variables+is+missing%3A+';
+	const SENDER_ERROR 	= 'You+can+specify+only+one+type+of+sender,+numeric+or+alphanumeric';
 	
-	public function __construct( $username, $password, $method = NULL ) {
+	public function __construct( $username, $password ) {
 		$this->user = $username;
 		$this->pass = $password;
 	}
 	
 	/**
 	 * Core function where the server connects to Skebby Gateway HTTP URL
-	 * and sends the data via CURL.
+	 * and sends the data via cURL.
 	 *
+	 * @uses skebbyAPI::cleanPhoneNumbers( $recipients )
 	 * @access protected
 	 * @return string
 	 */
 	protected function doRequest($data) {
 		try {
-			$data_string = '';
+			$data_string = 'username='.urlencode( $this->user ).'&password='.urlencode( $this->pass );
 			
 			foreach( $data as $key => $val ){
 				$recipients_string = '';
@@ -42,9 +45,8 @@ class skebbyAPI {
 					$data_string .= '&'.urlencode($key).'='.urlencode($val);	
 				}
 			}
-			$data_string = substr( $data_string, 1 );
 			
-			if(!function_exists('curl_init')) { throw new Exception('cURL module is not installed. This module is necessary for the correct handling of HTTP requests by SkebbyAPI'); }
+			if(!function_exists('curl_init')) { throw new Exception(self::CURL_ERROR); }
 			$ch = curl_init();
 			
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,10);
@@ -57,27 +59,11 @@ class skebbyAPI {
 			
 			$response = curl_exec($ch);
 			curl_close($ch);
-			if(!$response){
-				throw new Exception(NET_ERROR);
-			}
-			return $response;	
+			if(!$response){ throw new Exception(self::NET_ERROR); }
+			return $response;
 		} catch (Exception $e) {
 			return $e;
 		}
-	}
-	
-	/**
-	 * Function to clean the phone numbers from '00' and '+' international prefixes
-	 * 
-	 * @access protected
-	 * @return array
-	 */
-	protected function cleanPhoneNumbers($recipients) {
-		for( $i = 0; $i < count($recipients); $i++ ) {
-			$recipients[$i] = ltrim($recipients[$i], '0+');
-			$recipients[$i] = preg_replace('/[^0-9]+/', '', $recipients[$i]);
-		}
-		return $recipients;
 	}
 	
 	/**
@@ -85,49 +71,31 @@ class skebbyAPI {
 	 * on what sending method you choose before.
 	 * 
 	 * @uses skebbyAPI::doRequest( $data )
-	 * @uses skebbyAPI::cleanPhoneNumbers( $recipients )
 	 * @access public
 	 * @return mixed
 	 */
-	public function sendSMS(
-		$recipients,
-		$text,
-		$method='send_sms_classic',
-		$sender_number='',
-		$sender_string='',
-		$charset='',
-		$delivery_start='',
-		$encoding_scheme='',
-		$validity_period='',
-		$user_reference=''
-	) {
-		if (!is_array($recipients)){
-			$recipients = array($recipients); 
-		}
-		$parameters = array(
-			'method' => $method,
-			'username' => $this->user,
-			'password' => $this->pass,
-			'recipients' => $recipients,
-			'text' => $text
+	public function sendSMS( $data ) {
+		$error = '';
+		$required = array( 
+			'text', 
+			'recipients'
 		);
-        
-		if($delivery_start != '') { $parameters['delivery_start'] = $delivery_start; }
-		if($charset == 'UTF-8') { $parameters['charset'] = 'UTF-8'; }
-	    
-	    if($method != 'send_sms_basic') {
-		    if($sender_number != '' && $sender_string != '') {
-		        parse_str('status=failed&message='.SENDER_ERROR,$result);
-		        return $result;
+		foreach( $required as $r ) {
+			if( !isset($data[ $r ]) ) {
+				$error .= $r . '%2C+';
+			}	
+		}
+		if( $error != '' ) { return (string) 'status=failed&message='.self::EMPTY_ERROR.(substr($error,0,-4)); }
+		
+		if(!isset($data['method'])) { $data['method'] = 'send_sms_classic'; }
+		if(!is_array($data['recipients'])) { $data['recipients'] = array($data['recipients']); }
+	    if($data['method'] != 'send_sms_basic') {
+		    if(isset($data['sender_number']) && isset($data['sender_string'])) {
+		        return 'status=failed&code=10&message='.self::SENDER_ERROR;
 		    }
-			if($sender_number != '') { $parameters['sender_number'] = $sender_number; }
-			if($sender_string != '') { $parameters['sender_string'] = $sender_string; }
-			if($validity_period != '') { $parameters['validity_period'] = $validity_period; }
-			if($user_reference != '') { $parameters['user_reference'] = $user_reference; }
-			if($encoding_scheme == 'UCS2') { $parameters['validity_period'] = 'UCS2'; }
 	    }
 	    
-	    return $this->doRequest($parameters);
+	    return $this->doRequest($data);
 	}
 
 	/**
@@ -139,14 +107,10 @@ class skebbyAPI {
 	 * @return string
 	 */
 	public function getCredit( $charset = '' ) {
-		$parameters = array(
-			'method' => 'get_credit',
-			'username' => $this->user,
-			'password' => $this->pass
-		);
-		if($charset == 'UTF-8') { $parameters['charset'] = 'UTF-8'; }
+		$data = array( 'method' => 'get_credit' );
+		if($charset == 'UTF-8') { $data['charset'] = 'UTF-8'; }
 		
-	    return $this->doRequest($parameters);
+	    return $this->doRequest($data);
 	}
 	
 	/**
@@ -157,35 +121,28 @@ class skebbyAPI {
 	 * @access public
 	 * @return string
 	 */
-	public function addAlias(
-		$alias,
-		$business_name,
-		$nation,
-		$vat_number,
-		$taxpayer_number,
-		$street,
-		$city,
-		$postcode,
-		$contact,
-		$charset=''
-	) {
-		$parameters = array(
-			'method' => 'add_alias',
-			'username' => $this->user,
-			'password' => $this->pass,
-			'alias' => $alias,
-			'business_name' => $business_name,
-			'nation' => $nation,
-			'vat_number' => $vat_number,
-			'taxpayer_number' => $taxpayer_number,
-			'street' => $street,
-			'city' => $city,
-			'postcode' => $postcode,
-			'contact' => $contact
+	public function addAlias( $data ) {
+		$error = '';
+		$required = array(
+			'alias',
+			'business_name',
+			'nation',
+			'vat_number',
+			'taxpayer_number',
+			'street',
+			'city',
+			'postcode',
+			'contact'
 		);
-		if($charset == 'UTF-8') { $parameters['charset'] = 'UTF-8'; }
-	    
-	    return $this->doRequest($parameters);
+		foreach( $required as $r ) {
+			if( !isset($data[ $r ]) ) {
+				$error .= $r . '%2C+';
+			}	
+		}
+		if( $error != '' ) { return 'status=failed&code=10&message='.self::EMPTY_ERROR.(substr($error,0,-4)); }
+		
+		$data['method'] = 'add_alias';
+	    return $this->doRequest($data);
 	}
 	
 	/**
@@ -197,6 +154,20 @@ class skebbyAPI {
 	public function querystringToArray($data) {
 		parse_str($data,$result);
 		return $result;
+	}
+	
+	/**
+	 * Function to clean the phone numbers from '00' and '+' international prefixes
+	 * 
+	 * @access protected
+	 * @return array
+	 */
+	protected function cleanPhoneNumbers($num) {
+		for( $i = 0; $i < count($num); $i++ ) {
+			$num[$i] = ltrim($num[$i], '0+');
+			$num[$i] = preg_replace('/[^0-9]+/', '', $num[$i]);
+		}
+		return $num;
 	}
 }
 ?>
