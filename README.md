@@ -38,8 +38,8 @@ $sms = new skebbyAPI('username','password');
 ```php
 //Set the parameters inside an array
 $parameters = array(
-	'text' => "it's easy to send a message :)",
-	'recipients' => array('391234567890')
+  'text' => "it's easy to send a message :)",
+  'recipients' => array('391234567890')
 );
 
 // Call the sendSMS function
@@ -133,8 +133,8 @@ In case of unsuccessful dispatch:
 ```php
 //Set the parameters inside an array
 $parameters = array(
-	'alias' => 'Skebby',
-	'business_name' => 'Skebby'
+  'alias' => 'Skebby',
+  'business_name' => 'Skebby'
   'nation' => 'IT'
   'vat_number' => '111222333444'
   'taxpayer_number' => '111222333444'
