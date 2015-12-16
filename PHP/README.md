@@ -17,7 +17,7 @@ $sms = new skebbyAPI('username','password');
 
 ### Send a SMS message
 ```php
-//Set the parameters inside an array
+// Set the parameters inside an array
 $parameters = array(
 	'text' => "it's easy to send a message :)",
 	'recipients' => array('391234567890')
