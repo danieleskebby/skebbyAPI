@@ -1,6 +1,6 @@
 # C# .NET skebby API SDK
 
-This is the C# .NET version of skebby API SDK.
+This is the C# .NET version of Skebby API SDK.
 
 ## Usage
 

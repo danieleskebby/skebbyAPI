@@ -1,6 +1,6 @@
 # PHP skebby API SDK
 
-This is the PHP version of skebby API SDK.
+This is the PHP version of Skebby API SDK.
 
 ## Usage
 

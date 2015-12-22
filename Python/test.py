@@ -1,12 +1,14 @@
 #!/usr/bin/python
 
 from skebbyAPI import skebbyAPI
-#import pprint
 
 sms = skebbyAPI('username','password')
 
-recipients = ['391234567890']
+parameters = {
+    'text': 'test classe skebbyAPI via Python',
+    'recipients': ['391234567890']
+}
 
-send_sms = sms.sendSMS(recipients,'test classe skebbyAPI via Python')
+send_sms = sms.getCredit()
 
-print send_sms
+sms.printResult( send_sms )

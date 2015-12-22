@@ -12,9 +12,8 @@ Module Module1
         'Dim credit As Dictionary(Of String, String) = sms.getCredit()
         Dim result As Dictionary(Of String, String) = sms.sendSMS("test classe skebbyAPI via VB.NET", recipients)
         
-        For Each item As KeyValuePair(Of String, String) In result
-            Console.WriteLine(item.Key & ": " & item.Value)
-        Next
+        sms.printResult(result)
+        
         Console.ReadLine()
     End Sub
 

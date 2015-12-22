@@ -159,5 +159,11 @@ Namespace skebbyGW
 
             Return do_post_request(data)
         End Function
+        
+        Public Sub printResult( ByVal result As Dictionary(Of String, String) )
+            For Each item As KeyValuePair(Of String, String) In result
+                Console.WriteLine(item.Key & ": " & item.Value)
+            Next
+        End sub
     End Class
 End Namespace

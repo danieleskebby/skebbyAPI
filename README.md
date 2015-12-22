@@ -1,4 +1,4 @@
-# skebbyAPI SDK Version 0.1 beta
+# skebbyAPI SDK Version 0.1
 
 The goal of this project is to give developers a tool that can be integrated inside the application in no time, can be easy to use and can be readable.
 
