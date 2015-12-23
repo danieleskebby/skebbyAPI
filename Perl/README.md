@@ -25,7 +25,7 @@ $recipients = "&recipients[]=".join("&recipients[]=", $recipients);
 %send = $sms->sendSMS($recipients,'test classe skebbyAPI via Perl');
 
 # Print the result
-sms->printResult(%send);
+$sms->printResult(%send);
 ```
 
 ### Check available credit
@@ -34,7 +34,7 @@ sms->printResult(%send);
 %credit = sms->getCredit();
 
 # Print the result
-sms->printResult(%credit);
+$sms->printResult(%credit);
 ```
 
 ### Register an Alphanumeric Sender (Alias)
@@ -43,5 +43,5 @@ sms->printResult(%credit);
 %alias = sms->addAlias( 'Skebby', 'Skebby', 'IT', '111222333444', '111222333444', 'Via Melzo 12', 'Milan', '20100', 'contact@email.com' );
 
 # Print the result
-sms->printResult(%alias);
+$sms->printResult(%alias);
 ```
