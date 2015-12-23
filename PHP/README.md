@@ -7,7 +7,7 @@ This is the PHP version of Skebby API SDK.
 Here's the examples that uses the functions inside the Class
 
 ### Inclusion and class initialization
-```php
+```Php
 // Include the file that contains the SDK
 require_once 'skebbyAPI.php';
 
@@ -16,7 +16,7 @@ $sms = new skebbyAPI('username','password');
 ```
 
 ### Send a SMS message
-```php
+```Php
 // Set the parameters inside an array
 $parameters = array(
 	'text' => "it's easy to send a message :)",
@@ -31,7 +31,7 @@ echo $send;
 ```
 
 ### Check available credit
-```php
+```Php
 // Call the getCredit function
 $credit = $sms->getCredit();
 
@@ -40,7 +40,7 @@ echo $credit;
 ```
 
 ### Register an Alphanumeric Sender (Alias)
-```php
+```Php
 //Set the parameters inside an array
 $parameters = array(
   'alias' => 'Skebby',
@@ -55,7 +55,7 @@ $parameters = array(
 );
 
 // Call the addAlias function
-$alias = $sms->addAlias();
+$alias = $sms->addAlias( $parameters );
 
 // Print the result
 echo $alias;

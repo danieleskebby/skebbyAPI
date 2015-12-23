@@ -18,9 +18,7 @@ import java.net.*;
  * @see URLEncoder
  */
 public class skebbyAPI {
-	/**
-	 * Main parameters declaration
-	 */
+	// Main parameters declaration
 	protected String username;
 	protected String password;
 	protected String charset;

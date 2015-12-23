@@ -9,6 +9,4 @@ $recipients = "&recipients[]=".join("&recipients[]=", $recipients);
     
 #%credit = $sms->getCredit();
 %send = $sms->sendSMS($recipients,'test classe skebbyAPI via Perl');
-while (($k, $v) = each(%send)) {
-	print "$k: $v\n";
-}
+$sms->printResult(%send);

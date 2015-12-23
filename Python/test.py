@@ -9,6 +9,6 @@ parameters = {
     'recipients': ['391234567890']
 }
 
-send_sms = sms.getCredit()
+send_sms = sms.sendSMS( parameters )
 
 sms.printResult( send_sms )

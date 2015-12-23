@@ -125,4 +125,12 @@ sub addAlias {
 	%result = $self->do_post_request($data);
     return %results;
 }
+
+sub printResult {
+    my $self = shift;
+    my (%result) = @_;
+    while (($k, $v) = each(%result)) {
+        print "$k: $v\n";
+    }
+}
 1;

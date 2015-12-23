@@ -19,14 +19,15 @@ sms = skebbyAPI('username','password')
 ```Python
 # Set the data inside an array
 parameters = {
+    'text': ''
     'recipients': ['391234567890']
 }
 
 # Call the sendSMS function
-send_sms = sms.sendSMS(recipients,'test classe skebbyAPI via Python')
+send_sms = sms.sendSMS( parameters )
 
 # Print the result
-print send_sms
+sms.printResult( send_sms )
 ```
 
 ### Check available credit
@@ -35,27 +36,27 @@ print send_sms
 credit = sms.getCredit()
 
 # Print the result
-echo credit;
+sms.printResult( credit )
 ```
 
 ### Register an Alphanumeric Sender (Alias)
 ```Python
-//Set the parameters inside an array
-$parameters = array(
-  'alias' => 'Skebby',
-  'business_name' => 'Skebby'
-  'nation' => 'IT'
-  'vat_number' => '111222333444'
-  'taxpayer_number' => '111222333444'
-  'street' => 'Via Melzo 12'
-  'city' => 'Milan'
-  'postcode' => '20100'
-  'contact' => 'contact@email.com'
-);
+# Set the parameters inside an array
+parameters = {
+  'alias': 'Skebby',
+  'business_name': 'Skebby'
+  'nation': 'IT'
+  'vat_number': '111222333444'
+  'taxpayer_number': '111222333444'
+  'street': 'Via Melzo 12'
+  'city': 'Milan'
+  'postcode': '20100'
+  'contact': 'contact@email.com'
+}
 
 # Call the addAlias function
-$alias = $sms->addAlias();
+alias = sms.addAlias( parameters )
 
 # Print the result
-echo $alias;
+sms.printResult( alias )
 ```
