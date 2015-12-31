@@ -1,6 +1,6 @@
 # Node.JS skebby API SDK
 
-This is the Perl version of Skebby API SDK.
+This is the Node.JS version of Skebby API SDK.
 
 ## Usage
 
@@ -23,11 +23,11 @@ sms.sendSMS(
 		recipients: [391234567890],
 		text: "test classe skebbyAPI via Node.js"
 	},
-	function(data) { 
+	function(data) {
 		console.log("success string");
-		console.log(data); 
+		console.log(data);
 	},
-	function(error) { 
+	function(error) {
 		console.log("fail string");
 		console.log(error);
 	}
@@ -38,11 +38,11 @@ sms.sendSMS(
 ```JavaScript
 // Call the getCredit function
 sms.getCredit(
-	function(data) { 
+	function(data) {
 		console.log("success string");
-		console.log(data); 
+		console.log(data);
 	},
-	function(error) { 
+	function(error) {
 		console.log("fail string");
 		console.log(error);
 	}
@@ -64,11 +64,11 @@ sms.addAlias(
         postcode: "20100",
         contact: "contact@email.com"
 	},
-	function(data) { 
+	function(data) {
 		console.log("success string");
-		console.log(data); 
+		console.log(data);
 	},
-	function(error) { 
+	function(error) {
 		console.log("fail string");
 		console.log(error);
 	}
