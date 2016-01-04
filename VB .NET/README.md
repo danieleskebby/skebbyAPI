@@ -9,7 +9,7 @@ Here's the examples that uses the functions inside the Class
 ### Inclusion and class initialization
 In your project, import the file skebbyAPI.cs or put it in the same directory of your main project file
 
-```VisualBasic
+```vbnet
 ' Import the required libraries
 Imports System
 ' Import the skebbAPI SDK using its namespace
@@ -28,7 +28,7 @@ End Module
 ```
 
 ### Send a SMS message
-```VisualBasic
+```vbnet
 ' set the recipients
 Dim recipients(0) As String = "391234567890"
 
@@ -40,7 +40,7 @@ sms.printResult(send)
 ```
 
 ### Check available credit
-```VisualBasic
+```vbnet
 ' Call the getCredit function
 Dim credit As Dictionary(Of String, String) = sms.getCredit();
 
@@ -49,7 +49,7 @@ sms.printResult(credit)
 ```
 
 ### Register an Alphanumeric Sender (Alias)
-```VisualBasic
+```vbnet
 ' Call the addAlias function
 Dim alias_string As Dictionary(Of String, String) = sms.addAlias( "Skebby", "Skebby", "IT", "111222333444", "111222333444", "Via Melzo 12", "Milano", "20100", "contact@email.com" )
 
