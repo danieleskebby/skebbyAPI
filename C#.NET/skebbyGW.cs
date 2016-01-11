@@ -25,7 +25,7 @@ namespace SkebbyGW
             Password = Pass;
             Url = "http://gateway.skebby.it/api/send/smseasy/advanced/http.php";
         }
-
+        
         // core method, sends POST request to Skebby server
         protected static string doPostRequest(Dictionary<string,dynamic> data)
         {
