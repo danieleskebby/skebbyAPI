@@ -10,6 +10,7 @@ Here's the examples that uses the functions inside the Class
 If you put the skebbyAPI.java on the same folder where the main file is located, you don't need to write anything to import the class.
 
 ```Java
+// Import the required libraries
 import java.util.*;
 import java.net.*;
 
