@@ -4,3 +4,4 @@ project.lock.json
 .vscode
 NuGet.Config
 bin
+*.class

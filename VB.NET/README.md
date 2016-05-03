@@ -29,11 +29,15 @@ End Module
 
 ### Send a SMS message
 ```vbnet
-' set the recipients
+' set the variables
+Dim data As Dictionary(Of String, Object)
 Dim recipients(0) As String = "391234567890"
 
+data.Add("text","It's easy to send a message")
+data.Add("recipients", recipients)
+
 ' Call the sendSMS function
-Dim send As Dictionary(Of String, String) = sms.sendSMS("test classe skebbyAPI via VB.NET", recipients)
+Dim send As Dictionary(Of String, String) = sms.sendSMS(data)
 
 ' print the result
 sms.printResult(send)
@@ -50,8 +54,21 @@ sms.printResult(credit)
 
 ### Register an Alphanumeric Sender (Alias)
 ```vbnet
+' Set the variables
+Dim data As Dictionary(Of String, String)
+
+data.Add("alias","Skebby")
+data.Add("business_name","Skebby")
+data.Add("nation","IT")
+data.Add("vat_number","111222333444")
+data.Add("taxpayer_number","111222333444") 
+data.Add("street","Via Melzo 12")
+data.Add("city","Milan")
+data.Add("postcode","20100")
+data.Add("contact","contact@email.com")
+
 ' Call the addAlias function
-Dim alias_string As Dictionary(Of String, String) = sms.addAlias( "Skebby", "Skebby", "IT", "111222333444", "111222333444", "Via Melzo 12", "Milano", "20100", "contact@email.com" )
+Dim alias_string As Dictionary(Of String, String) = sms.addAlias(data)
 
 ' print the result
 sms.printResult(alias_string)

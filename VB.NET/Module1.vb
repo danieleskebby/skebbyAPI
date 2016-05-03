@@ -10,8 +10,8 @@ Module Module1
 
         recipients(0) = "391234567890"
         
-        data.Add("text","It's easy to send a message")
-        data.Add("recipients",recipients)
+        data.Add("text", "It's easy to send a message")
+        data.Add("recipients", recipients)
         
         'Dim credit As Dictionary(Of String, String) = sms.getCredit()
         'Dim alias As Dictionary(Of String, String) = sms.addAlias( data )
