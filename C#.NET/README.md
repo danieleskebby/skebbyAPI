@@ -28,40 +28,46 @@ public class Program
 
 ### Send a SMS message
 ```C#
-// set the recipients
-string[] recipients = new string[] {"391234567890"};
+// Set the variables
+Dictionary<string,dynamic> data = new Dictionary<string,dynamic>();
 
-// Call the sendSMS function
-Dictionary<string, string> send = sms.sendSMS(recipients,"test classe SkebbyAPI via C#");
+data.Add("text","It's easy to send a message :)");
+data.Add("recipients", {"391234567890"});
 
-// print the result
+// Call the sendSMS method
+string send = sms.sendSMS(input);
+
+// Print the result
 sms.printResult(send);
 ```
 
 ### Check available credit
 ```C#
 // Call the getCredit function
-Dictionary<string, string> credit = sms.getCredit();
+string credit = sms.getCredit();
 
-// print the result
+// Print the result
 sms.printResult(credit);
 ```
 
 ### Register an Alphanumeric Sender (Alias)
 ```C#
-// Call the addAlias function
-Dictionary<string, string> alias_string = sms.addAlias(
-	'Skebby',
-	'Skebby',
-	'IT',
-	'111222333444',
-	'111222333444',
-	'Via Melzo 12',
-	'Milano',
-	'20100',
-	'contact@email.com'
-);
+// Set the variables
+Dictionary<string,dynamic> data = new Dictionary<string,dynamic>();
 
-// print the result
+data.Add("alias","Skebby")
+data.Add("business_name","Skebby")
+data.Add("nation","IT")
+data.Add("vat_number","111222333444")
+data.Add("taxpayer_number","111222333444") 
+data.Add("street","Via Melzo 12")
+data.Add("city","Milan")
+data.Add("postcode","20100")
+data.Add("contact","contact@email.com")
+
+// Call the addAlias function
+string alias_string = sms.addAlias(data);
+
+// Print the result
 sms.printResult(alias_string);
 ```
