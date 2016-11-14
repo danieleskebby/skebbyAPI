@@ -1,16 +1,16 @@
-﻿// Skebby C# Gateway Class
+﻿// Import useful libraries	
+using System;
+using System.IO;
+using System.Web;
+using System.Net;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+    
+// Skebby C# Gateway Class
 // Skebby namespace
 namespace SkebbyGW
 {
-    // Import useful libraries	
-    using System;
-    using System.IO;
-    using System.Web;
-    using System.Net;
-    using System.Text;
-    using System.Collections;
-    using System.Collections.Generic;
-
     // The actual class
     public class skebbyAPI
     {
@@ -23,7 +23,7 @@ namespace SkebbyGW
         {
             Username = User;
             Password = Pass;
-            Url = "http://gateway.skebby.it/api/send/smseasy/advanced/http.php";
+            Url = "http://api.skebby.it/api/send/smseasy/advanced/http.php";
         }
         
         // core method, sends POST request to Skebby server

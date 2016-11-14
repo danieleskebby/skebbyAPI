@@ -16,7 +16,7 @@ Namespace skebbyGW
         Sub New(ByVal user As String, ByVal pass As String)
             MyClass.Username = WebUtility.UrlEncode(user)
             MyClass.Password = WebUtility.UrlEncode(pass)
-            MyClass.Url = "http://gateway.skebby.it/api/send/smseasy/advanced/http.php"
+            MyClass.Url = "http://api.skebby.it/api/send/smseasy/advanced/http.php"
         End Sub
 
         Protected Function doPostRequest(ByVal data As Dictionary(Of String, Object))

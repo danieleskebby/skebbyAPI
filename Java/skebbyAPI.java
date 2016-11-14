@@ -44,14 +44,14 @@ public class skebbyAPI {
 		username = user;
 		password = pass;
 		charset = cset;
-		url = "http://gateway.skebby.it/api/send/smseasy/advanced/http.php";
+		url = "http://api.skebby.it/api/send/smseasy/advanced/http.php";
 	}
 	
 	/**
 	 * Core method.
 	 * connects to skebby URL and sends data via HTTP POST request
 	 * 
-	 * @param data	Map<String,String> object that contains the data
+	 * @param data	Map<String,Object> object that contains the data
 	 *				that will the sent through the request.
 	 * @return 		the response from the POST request, formatted as a querystring.
 	 * @throws IOException 
@@ -59,16 +59,50 @@ public class skebbyAPI {
 	 * @throws ProtocolException if a protocol outside <i>POST, PUT, DELETE, GET</i> is inserted
 	 * @throws UnsupportedEncodingException when a charset not supported inside the URLEncoder class is used
 	 */
-	protected String doPostRequest( Map<String,String> data ) throws IOException, MalformedURLException, ProtocolException, UnsupportedEncodingException {
-		URL connUrl = new URL(url);
-		StringBuilder postData = new StringBuilder();
-		for (Map.Entry<String,String> param : data.entrySet()) {
-			if (postData.length() != 0) postData.append('&');
-			postData.append(URLEncoder.encode(param.getKey(), data.get("charset")));
-			postData.append('=');
-			postData.append(URLEncoder.encode(String.valueOf(param.getValue()), data.get("charset")));
+	protected String doPostRequest( Map<String,Object> data ) throws IOException, MalformedURLException, ProtocolException, UnsupportedEncodingException {
+		
+        data.put("username",username);
+		data.put("password",password);
+        if ( !data.containsKey("charset") ) {
+            data.put("charset","UTF-8");
+        }
+        
+		if(data.containsKey("recipients")) {
+			
+            System.out.println(data.get("recipients").getClass().getName());
+            
+            if(data.get("recipients").getClass() == ArrayList.class) {
+                List<Object> recipients = (ArrayList<Object>)data.get("recipients");
+                System.out.println("It's an arrayList!");
+                int i = 0;
+                for(Object rec: recipients) {
+                    System.out.println(rec);
+                    i++;
+                }
+                
+                //data.put("recipients[" + i + "]", recipients.get(i));
+            } else {
+                System.out.println("It's not an arrayList :(");
+                String[] recipients = (String[])data.get("recipients");
+            }
+			/*for(int i = 0; i < recipients; i++) {
+				System.out.println(i);
+                //data.put("recipients[" + i + "]", recipients.get(i));
+			}
+            if(data.containsKey("recipients[0]") || data.containsKey("recipients[0][recipient]")) { 
+                data.remove("recipients");
+            }*/
 		}
-		byte[] postDataBytes = postData.toString().getBytes(data.get("charset"));
+        
+        URL connUrl = new URL(url);
+		StringBuilder postData = new StringBuilder();
+		for (Map.Entry<String,Object> param : data.entrySet()) {
+			if (postData.length() != 0) postData.append('&');
+			postData.append(URLEncoder.encode(param.getKey(), data.get("charset").toString()));
+			postData.append('=');
+			postData.append(URLEncoder.encode(String.valueOf(param.getValue()), data.get("charset").toString()));
+		}
+		byte[] postDataBytes = postData.toString().getBytes(data.get("charset").toString());
 
 		HttpURLConnection conn = (HttpURLConnection)connUrl.openConnection();
 		conn.setRequestMethod("POST");
@@ -78,7 +112,7 @@ public class skebbyAPI {
 		conn.setDoOutput(true);
 		conn.getOutputStream().write(postDataBytes);
 
-		Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), data.get("charset")));
+		Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), data.get("charset").toString()));
 		
 		String result = new String();
 		for ( int c = in.read(); c != -1; c = in.read() ) {
@@ -99,32 +133,15 @@ public class skebbyAPI {
 	 * @throws IOException 
 	 * @throws IllegalArgumentException if a charset different than UTF-8 or ISO-8859-1 is used
 	 */
-	public String sendSMS( Map<String,String> input ) throws IOException {
+	public String sendSMS( Map<String,Object> input ) throws IOException {
 		if (input.containsKey("charset") && (!input.get("charset").equals("UTF-8") && !input.get("charset").equals("ISO-8859-1"))) {
             throw new IllegalArgumentException("Charset not supported.");
         }
-        Map<String,String> data = new LinkedHashMap<>();
-		data.put("username",username);
-		data.put("password",password);
-		if(null != input.get("text")) { data.put("text",input.get("text")); }
-		if(input.containsKey("recipients")) {
-			String[] recipients = input.get("recipients").split(",");
-			int i = 0;
-			for(String r: recipients) {	
-				data.put("recipients[" + i + "]",r);
-				i++;
-			}
-		}
-		data.put("method", input.containsKey("method") ? input.get("method") : "send_sms_classic");
-		if(null != input.get("sender_number")) { data.put("sender_number",input.get("sender_number")); }
-		if(null != input.get("sender_string")) { data.put("sender_string",input.get("sender_string")); }
-		data.put("charset", input.containsKey("charset") ? input.get("charset") : "UTF-8");
-		if(null != input.get("delivery_start")) { data.put("delivery_start",input.get("delivery_start")); }
-		if(null != input.get("encoding_scheme")) { data.put("encoding_scheme",input.get("encoding_scheme")); }
-		if(null != input.get("validity_period")) { data.put("validity_period",input.get("validity_period")); }
-		if(null != input.get("user_reference")) { data.put("user_reference",input.get("user_reference")); }
+        if(null == input.get("method") ) {
+            input.put("method","send_sms_classic");
+        }
 		
-		return doPostRequest(data);
+		return doPostRequest( input );
 	}
 	
 	/**
@@ -138,20 +155,18 @@ public class skebbyAPI {
 	 * @throws IOException 
 	 * @throws IllegalArgumentException if a charset different than UTF-8 or ISO-8859-1 is used
 	 */
-	public String getCredit() {
-		
+	public String getCredit() throws IOException {
+        Map<String,Object> input = new LinkedHashMap<>();
+        input.put("charset","UTF-8");
+		return getCredit( input );
 	}
-	public String getCredit( Map<String,String> input ) throws IOException {
+	public String getCredit( Map<String,Object> input ) throws IOException {
 		if (input.containsKey("charset") && (!input.get("charset").equals("UTF-8") && !input.get("charset").equals("ISO-8859-1"))) {
             throw new IllegalArgumentException("Charset not supported.");
         }
-        Map<String,String> data = new LinkedHashMap<>();
-		data.put("method", "get_credit");
-		data.put("username", username);
-		data.put("password", password);
-		data.put("charset", input.containsKey("charset") ? input.get("charset") : "UTF-8");
+		input.put("method", "get_credit");
 		
-		return doPostRequest(data);
+		return doPostRequest( input );
 	}
 	
 	/**
@@ -165,26 +180,13 @@ public class skebbyAPI {
 	 * @throws IOException 
 	 * @throws IllegalArgumentException if a charset different than UTF-8 or ISO-8859-1 is used
 	 */
-	public String addAlias( Map<String,String> input ) throws IOException {
+	public String addAlias( Map<String,Object> input ) throws IOException {
 		if (input.containsKey("charset") && (!input.get("charset").equals("UTF-8") && !input.get("charset").equals("ISO-8859-1"))) {
             throw new IllegalArgumentException("Charset not supported.");
         }
-        Map<String,String> data = new LinkedHashMap<>();
-		data.put("method", "add_alias");
-		data.put("username", username);
-		data.put("password", password);
-		if(null != input.get("alias")) { data.put("alias",input.get("alias")); }
-		if(null != input.get("business_name")) { data.put("business_name",input.get("business_name")); }
-		if(null != input.get("nation")) { data.put("nation",input.get("nation")); }
-		if(null != input.get("vat_number")) { data.put("vat_number",input.get("vat_number")); }
-		if(null != input.get("taxpayer_number")) { data.put("taxpayer_number",input.get("taxpayer_number")); }
-		if(null != input.get("street")) { data.put("street",input.get("street")); }
-		if(null != input.get("city")) { data.put("city",input.get("city")); }
-		if(null != input.get("postcode")) { data.put("postcode",input.get("postcode")); }
-		if(null != input.get("contact")) { data.put("contact",input.get("contact")); }
-		data.put("charset", input.containsKey("charset") ? input.get("charset") : "UTF-8");
+        input.put("method", "add_alias");
 		
-		return doPostRequest(data);
+		return doPostRequest( input );
 	}
 	
 	/**

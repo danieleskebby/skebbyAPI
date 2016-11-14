@@ -9,7 +9,7 @@ require 'cgi'
 # The actual class
 class SkebbyAPI
 	def initialize(username,password)
-		@url = 'http://gateway.skebby.it/api/send/smseasy/advanced/http.php'
+		@url = 'http://api.skebby.it/api/send/smseasy/advanced/http.php'
 		@parameters = {
 			'username' => username,
 			'password' => password,

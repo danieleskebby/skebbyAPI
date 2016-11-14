@@ -4,7 +4,7 @@ class skebbyAPI {
 	
 	protected $user;
 	protected $pass;
-	protected $http_url = "https://gateway.skebby.it/api/send/smseasy/advanced/http.php";
+	protected $http_url = "https://api.skebby.it/api/send/smseasy/advanced/http.php";
 	
 	const CURL_ERROR 	= 'cURL module is not installed. This module is necessary for the correct handling of HTTP requests by SkebbyAPI';
 	const NET_ERROR 	= 'Network error: cURL can\'t connect to Skebby URL';

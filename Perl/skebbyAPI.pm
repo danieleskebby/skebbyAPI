@@ -36,7 +36,7 @@ sub do_post_request {
 	my $data = $_[0];
 	
 	$ua = new LWP::UserAgent;
-    $req = new HTTP::Request "POST","http://gateway.skebby.it/api/send/smseasy/advanced/http.php";
+    $req = new HTTP::Request "POST","http://api.skebby.it/api/send/smseasy/advanced/http.php";
     $req->content_type("application/x-www-form-urlencoded");
 
 	$req->content($data);

@@ -8,7 +8,7 @@ import urllib2
 # define constants
 NET_ERROR = "Network error, unable to send the message"
 SENDER_ERROR = "You can specify only one type of sender, numeric or alphanumeric"
-url = 'http://gateway.skebby.it/api/send/smseasy/advanced/http.php'
+url = 'http://api.skebby.it/api/send/smseasy/advanced/http.php'
 
 # The actual class
 class skebbyAPI:

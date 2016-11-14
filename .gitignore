@@ -5,3 +5,5 @@ project.lock.json
 NuGet.Config
 bin
 *.class
+*.log
+*.lck
